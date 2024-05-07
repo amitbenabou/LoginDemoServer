@@ -14,7 +14,7 @@ namespace LoginDemoServer.DTO
             return new Models.User() { Email = Email, Password = Password, PhoneNumber = PhoneNumber, BirthDate = BirthDate, Name = Name };
         }
 
-        public User() { }
+        public User(ICollection<Grade> userGrade) { }
         public User(Models.User modelUser)
         {
             this.PhoneNumber = modelUser.PhoneNumber;

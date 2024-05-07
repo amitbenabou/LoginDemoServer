@@ -75,6 +75,29 @@ namespace LoginDemoServer.Controllers
             }
 
         }
+        [HttpGet("GetUserGrades")]
+        public IActionResult GetUserGrades()
+        {
+            try
+            {
+                //Check if user is logged in 
+                string userEmail = HttpContext.Session.GetString("loggedInUser");
+
+                if (string.IsNullOrEmpty(userEmail))
+                {
+                    return Unauthorized("User is not logged in");
+                }
+                //user is logged in - lets check who is the user
+                ICollection<Grade> userGrade = context.GetUserGrades(userEmail);
+
+                return Ok(new DTO.User(Models.User)userGrade);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
 
 
     }

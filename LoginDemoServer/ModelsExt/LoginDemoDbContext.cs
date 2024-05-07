@@ -11,10 +11,15 @@ public partial class LoginDemoDbContext : DbContext
         Models.User user = this.Users.Where(u => u.Email == email).FirstOrDefault();
         return user;
     }
-    public List<Grade> GetUserGrades (string email)
+    public ICollection<Grade> GetUserGrades (string email)
     {
-        List<Grade> grade = this.Grades.Where(g => g.Email == email).ToList();
-        return grade;
+        User u = GetUSerFromDB(email);
+        List<Grade> grades = this.Grades.Where(g => g.Email == email).ToList();
+        foreach (Grade grade in grades)
+        {
+            u.Grades.Add(grade);  
+        }
+        return u.Grades ;
     }
 }
 
